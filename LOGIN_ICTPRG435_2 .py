@@ -12,7 +12,7 @@ stuff for the assessment as it functions really well and I am proud of it.
 """
 """We need to import some libraries"""
 import getpass
-import ICTPRG435_2MAIN
+import MAIN_ICTPRG435_2
 """ We need a database for creating logins"""
 self = None
 
