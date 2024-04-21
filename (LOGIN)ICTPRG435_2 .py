@@ -12,6 +12,7 @@ stuff for the assessment as it functions really well and I am proud of it.
 """
 """We need to import some libraries"""
 import getpass
+import ICTPRG435_2MAIN
 """ We need a database for creating logins"""
 self = None
 
@@ -102,6 +103,13 @@ class Database:
                 getname = line.strip().split()
                 if getname[2] == username:
                     return f"{getname[0]} {getname[1]}"
+    
+    def get_username(self, username):
+        with open("Accountdata.txt", "r") as getusername:
+            for line in getusername:
+                getusername = line.strip().split()
+                if getusername[2] == username:
+                    return f"{username}"
 
 
 """We need a main page to select login or create account"""
@@ -150,10 +158,10 @@ def login():
     
 def home():
     choice = input("What would you like to do?\n"
-                   "1. Open Accountdata.txt information\n"
+                   "1. Enter Password Manager\n"
                    "2. Logout")
     if choice == '1':
-        print_file()
+        return main()
 
 def print_file():
     try:
@@ -162,6 +170,8 @@ def print_file():
             print(readfile)
     except FileNotFoundError:
         print("File not found")
+
+
 
 if __name__ == "__main__":
     main()
