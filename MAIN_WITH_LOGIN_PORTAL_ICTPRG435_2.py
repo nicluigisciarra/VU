@@ -192,6 +192,10 @@ def home(username):
                     "2. Logout\n")
         if choice == '1':
             return main0(username)
+        elif choice == '2':
+            return login()
+        else:
+            invalid()
 
 """
 here we will create a class for UserData this will function as a way to:
@@ -237,16 +241,19 @@ class UserData:
                         print(f"Here is the account data for {website}\n"
                               f"Username: {accountname}\n"
                               f"Password: {accountpassword}")
-                        found == True
+                        found = True
                         return ud.search_acc_enq(username)
+    
         except FileNotFoundError:
             newuser = input("There was no data stored in this system.\n"
-                   "Would you like to add a new account? (yes/no)\n")
-            if newuser == 'yes' or 'y' or 'Yes':
+                   "Would you like to add a new account? (yes/no)\n").lower()
+            if newuser in ['yes', 'y']:
                 return new_accinf(username)
+            elif newuser in ['no', 'n']:
+                return main0(username)
         if not found:
             user = input("There was no data found in the system, \n"
-                        + "would you like to search again? \n").lower()
+            + "Would you like to search again? (yes/no) \n").lower()
             if user in ['yes', 'y']:
                 return search_acc(username)
             elif user in ['n', 'no']:
@@ -254,6 +261,7 @@ class UserData:
             else:
                 invalid()
                 return search_acc(username)
+            
         
 
             
@@ -267,8 +275,8 @@ class UserData:
                         print("Account already added!")
                         return main0(username)
                     else:
-                        print("Adding new account")
-                        continue 
+                        return print("Adding new account")
+                        
         except FileNotFoundError:
             print("No accounts saved")
             pass                     
@@ -295,12 +303,19 @@ class UserData:
                         user = input("Would you like to add one?").lower()
                         if user in ['yes', 'y']:
                             return new_accinf(username)
+                        elif user in ['no', 'n']:
+                            return main0(username)
                         else:
                             return main0(username)
                     else:
                         print(website)
                         
             website = input("Which website would you like to search?\n").capitalize()
+            if not website:
+                print(f"There is no account data for {website}\n"
+                      "Please check if it was spelt correctly!")
+                return main0(username)
+            webdata.close
             return ud.search_acc_inf(username, website)
 
         except FileNotFoundError:
@@ -308,7 +323,7 @@ class UserData:
             nouser = input("Would you like to add an account? (yes/no)").lower
             if nouser in ['y', 'yes']:
                 return new_accinf(username)
-            if nouser in ['n', 'no']:
+            elif nouser in ['n', 'no']:
                 return main0(username)
             else:
                 invalid()
@@ -366,7 +381,7 @@ def main0(username):
                         "2. Search for account\n"
                         "3. Show websites that have saved account info\n"
                         "4. Logout\n"
-                        "5. Exit Password Manager")
+                        "5. Exit Password Manager\n")
 
             if userstart == '1':
                 return new_accinf(username)
@@ -399,3 +414,15 @@ calls the main function to start the program.
     
 if __name__ == '__main__':
     main()
+
+
+#DEBUG NOTES:
+# - When searching for a website, it will always say no data found. DONE
+# - Everytime you consistently add new account, it will overlap and rewrite  
+#   new account added for every time the function is run. DONE
+# - When no data stored then asks would you like to add new account?
+# - When no, still prompts for website of account.
+# - When it says username already taken maybe ask if you would like to login
+# - Add option to delete already made accounts
+# - It is way too easy to accidentally create an account.
+# - when repeatedly searching it eventually says no account found even when there is
